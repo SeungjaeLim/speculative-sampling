@@ -1,0 +1,7 @@
+Autoregressive Decode
+---------------------
+Time = 46.27s
+
+Speculative Decode
+------------------
+Time = 32.55s
