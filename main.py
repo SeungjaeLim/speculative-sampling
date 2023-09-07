@@ -15,6 +15,7 @@ from datasets import load_dataset
 import pandas as pd
 
 logs = []
+results = []
 
 def max_fn(x):
     x_max = np.where(x > 0, x, 0)
@@ -133,7 +134,7 @@ def main(
         return text, elapsed_time
     
     for i, entry in enumerate(tqdm(dataset['train'])):
-        if i != 0 and i % 2 == 0:
+        if i != 0:
             max_length = max(map(len, logs))
             logs_tmp = [i + [-1] * (max_length - len(i)) for i in logs]
             df_logs = pd.DataFrame(logs_tmp)
@@ -146,6 +147,8 @@ def main(
                 f.write("------------------\n")
                 f.write(f"Time = {tot_sps:.2f}s\n")
             df_logs.to_csv("log.csv", index = False)
+            df_results = pd.DataFrame(results)
+            df_results.to_csv("results.csv", index = False)
             
         prompt = entry['ctx']
 
@@ -168,6 +171,7 @@ def main(
         )
         tot_auto += autoregressive_time
         tot_sps += speculative_time
+        results.append([autoregressive_text, speculative_text])
         # print results
         #print()
         #print("Autoregressive Decode")

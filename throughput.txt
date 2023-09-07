@@ -1,7 +1,7 @@
 Autoregressive Decode
 ---------------------
-Time = 46.27s
+Time = 46.04s
 
 Speculative Decode
 ------------------
-Time = 32.55s
+Time = 39.40s
